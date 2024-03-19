@@ -1,7 +1,7 @@
-import Views.NavBar;
-import Views.Test1;
-import Views.Test2;
-import Views.Test3;
+import Vues.BarNavig;
+import Vues.Test1;
+import Vues.Test2;
+import Vues.Test3;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -15,7 +15,7 @@ public class Demo extends Application {
 		Test2 test2 = new Test2();
 		Test3 test3 = new Test3();
 
-		NavBar navBar = new NavBar();
+		BarNavig navBar = new BarNavig();
 
 		BorderPane root = new BorderPane();
 		root.setTop(navBar);
