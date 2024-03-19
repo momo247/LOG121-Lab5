@@ -26,7 +26,7 @@ public class Demo extends Application {
 		Scene scene = new Scene(root);
 
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Testing");
+		primaryStage.setTitle("Test");
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
