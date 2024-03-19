@@ -13,6 +13,7 @@ public class Main extends Application{
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("PanneauTest.fxml"));
 				Pane root = loader.load();
+				//Controller controller = loader.getController();
 				Scene scene = new Scene(root);
 				primaryStage.setScene(scene);
 				primaryStage.setTitle("");
