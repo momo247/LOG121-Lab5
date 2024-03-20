@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 public class Test2 extends StackPane {
 
 	public Test2() {
-		Rectangle rectangle = new Rectangle(200, 200, Color.CRIMSON);
+		Rectangle rectangle = new Rectangle(300, 300, Color.CRIMSON);
 		this.getChildren().add(rectangle);
 	}
 
