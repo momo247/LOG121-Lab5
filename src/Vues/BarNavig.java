@@ -12,5 +12,10 @@ public class BarNavig extends HBox {
 		box.setValue("Fichier");
 
 		this.getChildren().add(box);
+		box.setOnAction(e -> gererAction(box.getValue()));
+	}
+
+	public void gererAction(String event) {
+		System.out.println(event);
 	}
 }
