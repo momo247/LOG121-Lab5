@@ -13,10 +13,11 @@ public class Main extends Application{
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("PanneauTest.fxml"));
 				Pane root = loader.load();
-				//Controller controller = loader.getController();
+				Controller controller = loader.getController();
+				controller.setStage(primaryStage);
 				Scene scene = new Scene(root);
 				primaryStage.setScene(scene);
-				primaryStage.setTitle("");
+				primaryStage.setTitle("Image Viewer");
 				primaryStage.setResizable(false);
 				primaryStage.show();
 			} catch (Exception e) {
