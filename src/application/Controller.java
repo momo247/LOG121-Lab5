@@ -2,6 +2,7 @@ package application;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 
 import javafx.collections.ObservableList;
@@ -11,13 +12,26 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Controller {
 
 	@FXML
+	Pane PanneauImages;
+	@FXML
 	MenuBar barDeMenu;
+	@FXML
+	ImageView vueImage1;
+	@FXML
+	ImageView vueImage2;
+	@FXML
+	ImageView vueImage3;
+
+	private Image image;
 
 	private Desktop desktop = Desktop.getDesktop();
 	private final FileChooser fileChooser = new FileChooser();
@@ -43,6 +57,15 @@ public class Controller {
 						System.out.println("File is opened");
 						configurerFileChooser(fileChooser);
 						File fichier = fileChooser.showOpenDialog(stage);
+						if (fichier != null) {
+							ouvrirFichier(fichier);
+							if (fichier.getName().contains(".png") || fichier.getName().contains(".jpg")) {
+								image = new Image(fichier.toURI().toString());
+								vueImage1.setImage(image);
+								vueImage2.setImage(image);
+								vueImage3.setImage(image);
+							}
+						}
 
 					}
 
@@ -74,7 +97,19 @@ public class Controller {
 
 	private void configurerFileChooser(final FileChooser filechooser) {
 		fileChooser.setTitle("Files");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
+				new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"),
+				new FileChooser.ExtensionFilter("SER", "*.ser"));
 
+	}
+
+	private void ouvrirFichier(File fichier) {
+		try {
+			desktop.open(fichier);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	protected void setStage(Stage stage) {
