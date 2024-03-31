@@ -4,16 +4,20 @@ import View.Observer;
 
 public abstract class Observable {
 
-	public void addObserver(Observer observer) {
+	private Observer observer;
 
+	public void addObserver(Observer observer) {
+		this.observer = observer;
 	}
 
-	public void removeObserver(Observer observer) {
-
+	public void removeObserver() {
+		this.observer = null;
 	}
 
 	public void notifyObserver() {
-
+		if(observer != null) {
+			observer.update(this);
+		}
 	}
 	
 }
