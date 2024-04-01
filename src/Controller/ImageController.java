@@ -1,9 +1,7 @@
 package Controller;
 
 import java.io.File;
-
 import Model.ImageModel;
-import Model.PerspectiveModel;
 import View.ThumbnailImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -11,7 +9,6 @@ import javafx.stage.FileChooser;
 public class ImageController {
 
 	private ImageModel imageModel1, imageModel2, imageModel3;
-	//private PerspectiveModel perspectiveModel1, perspectiveModel2;
     private ThumbnailImageView thumbnailView;
 
     public ImageController(ImageModel imageModel1, ImageModel imageModel2, ImageModel imageModel3, ThumbnailImageView thumbnailView) {

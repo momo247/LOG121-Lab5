@@ -1,7 +1,7 @@
 import Controller.ImageController;
+import Controller.OperationManager;
 import Controller.PerspectiveController;
 import Model.ImageModel;
-import Model.PerspectiveModel;
 import View.PersepectiveImageView;
 import View.ThumbnailImageView;
 import javafx.application.Application;
@@ -19,8 +19,8 @@ public class MainWindow extends Application {
 	public static final double HEIGHT = 600;
 	public static final double WIDTH = 750;
 
+	private ImageView test1, test2, test3;
 	private ImageModel iModel1, iModel2, iModel3;
-	private PerspectiveModel pModel1, pModel2;
 	private ThumbnailImageView tImageView;
 	private PersepectiveImageView pImageView1, pImageView2;
 	private ImageController iController;
@@ -30,15 +30,21 @@ public class MainWindow extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		OperationManager operationManager = OperationManager.getInstance();
 		iModel1 = new ImageModel();
 		iModel2 = new ImageModel();
 		iModel3 = new ImageModel();
-		pModel1 = new PerspectiveModel();
-		pModel2 = new PerspectiveModel();
 		tImageView = new ThumbnailImageView();
 		pImageView1 = new PersepectiveImageView();
 		pImageView2 = new PersepectiveImageView();
+
+		test1 = tImageView.getImageView();
+		test2 = pImageView1.getImageView();
+		test3 = pImageView2.getImageView();
+
 		iController = new ImageController(iModel1, iModel2, iModel3, tImageView);
+		pController1 = new PerspectiveController(operationManager, test2);
+		pController2 = new PerspectiveController(operationManager, test3);
 		iModel1.addObserver(tImageView);
 		iModel2.addObserver(pImageView1);
 		iModel3.addObserver(pImageView2);
@@ -50,35 +56,9 @@ public class MainWindow extends Application {
 		MenuItem exitItem = new MenuItem("Exit");
 		fileMenu.getItems().addAll(openItem, saveItem, new SeparatorMenuItem(), exitItem);
 		menuBar.getMenus().add(fileMenu);
-
-		openItem.setOnAction(e -> iController.selectImage());
-
-		//BorderPane root = new BorderPane();
-		Pane imagePane = new Pane();
-		ImageView test1 = tImageView.getImageView();
-		ImageView test2 = pImageView1.getImageView();
-		ImageView test3 = pImageView2.getImageView();
-		test1.setFitHeight(150);
-		test1.setFitWidth(200);
-		test1.setPreserveRatio(true);
-
-		test2.setFitHeight(350);
-		test2.setFitWidth(350);
-		test2.setPreserveRatio(true);
-
-		test3.setFitHeight(350);
-		test3.setFitWidth(350);
-		test3.setPreserveRatio(true);
-
-		test1.setLayoutX((WIDTH - test1.getBoundsInLocal().getWidth()) / 2);
-		test2.setLayoutY((HEIGHT - test2.getFitHeight()) / 2 + 50);
-		test2.setLayoutX(WIDTH - test2.getFitWidth());
-		test3.setLayoutY((HEIGHT - test2.getFitHeight()) / 2 + 50);
-
-		imagePane.getChildren().addAll(test1, test2, test3);
-		
 		root.setTop(menuBar);
-		root.setCenter(imagePane);
+
+		openItem.setOnAction(e -> openImage(""));
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT);
 
@@ -97,7 +77,36 @@ public class MainWindow extends Application {
 	}
 
 	public void openImage(String path) {
+		iController.selectImage();
+		Pane imagePane = new Pane();
+		
+		test1.setFitHeight(150);
+		test1.setFitWidth(200);
+		test1.setPreserveRatio(true);
 
+		test2.setFitHeight(350);
+		test2.setFitWidth(350);
+		test2.setPreserveRatio(true);
+
+		test3.setFitHeight(350);
+		test3.setFitWidth(350);
+		test3.setPreserveRatio(true);
+
+		test1.setLayoutX((WIDTH - test1.getBoundsInLocal().getWidth()) / 2);
+		test2.setLayoutY((HEIGHT - test2.getFitHeight()) / 2 + 50);
+		test2.setLayoutX(WIDTH - test2.getBoundsInLocal().getWidth());
+		test3.setLayoutY((HEIGHT - test2.getFitHeight()) / 2 + 50);
+
+		test1.setOnMouseClicked(e -> System.out.println("1"));
+		test2.setOnMouseClicked(e -> System.out.println("2"));
+		test3.setOnMouseClicked(e -> System.out.println("3"));
+
+		test2.setOnMouseDragged(e -> pController1.handleMouseDragged(e));
+		test3.setOnScroll(e -> pController2.handleMouseScrolled(e));
+
+		imagePane.getChildren().addAll(test1, test2, test3);
+		
+		root.setCenter(imagePane);
 	}
 
 	public static void main(String[] args) {
