@@ -1,6 +1,5 @@
 package View;
 
-import Controller.ImageController;
 import Model.ImageModel;
 import Model.Observable;
 import javafx.scene.image.Image;

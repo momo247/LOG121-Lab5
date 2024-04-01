@@ -13,6 +13,7 @@ public class PerspectiveModel extends Observable {
 
 	public void setScale(Double scale) {
 		this.scale = scale;
+		notifyObserver();
 	}
 
 	public Point2D getTranslation() {
@@ -21,6 +22,7 @@ public class PerspectiveModel extends Observable {
 
 	public void setTranslation(Point2D translation) {
 		this.translation = translation;
+		notifyObserver();
 	}
 
 	public Point2D getMouseClickPosition() {
@@ -29,6 +31,7 @@ public class PerspectiveModel extends Observable {
 
 	public void setMouseClickPosition(Point2D mouseClickPosition) {
 		this.mouseClickPosition = mouseClickPosition;
+		notifyObserver();
 	}
 	
 }
