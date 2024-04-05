@@ -14,12 +14,8 @@ public class Zoom extends Operation {
 
 	@Override
 	public void execute() {
-		imageView.setScaleX(imageView.getScaleX() * scale);
-		//imageView.setFitWidth(imageView.getFitHeight() * scale);
-		
+		imageView.setScaleX(imageView.getScaleX() * scale);		
 		imageView.setScaleY(imageView.getScaleY() * scale);
-		//imageView.setFitHeight(imageView.getFitHeight() * scale);
-		
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package Controller;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -18,10 +19,19 @@ public class PerspectiveController {
 		previousX = 0;
 		previousY = 0;
 	}
+
+	public void handleMouseEntered() {
+		imageView.setCursor(Cursor.OPEN_HAND);
+	}
     
 	public void handleMousePressed(MouseEvent event) {
+		imageView.setCursor(Cursor.CLOSED_HAND);
 		previousX = event.getX();
 		previousY = event.getY();
+	}
+
+	public void handleMouseReleased() {
+		imageView.setCursor(Cursor.OPEN_HAND);
 	}
 
 	public void handleMouseDragged(MouseEvent event) {
@@ -40,7 +50,6 @@ public class PerspectiveController {
 		} else {
 			zoom = 1 - ZOOM_FACTOR;
 		}
-
 		operationManager.executeOperation(new Zoom(imageView, zoom));
 	}
 
