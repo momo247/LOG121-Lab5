@@ -15,8 +15,6 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -147,21 +145,19 @@ public class MainWindow extends Application {
 
 		thumbnail.getChildren().add(thumbnailImageView);
 		perspective1.getChildren().add(perspectiveImageView1);
-		
 		perspective2.getChildren().add(perspectiveImageView2);
 		
-		HBox hBox2 = new HBox();
-		hBox2.getChildren().add(thumbnail);
-		hBox2.setAlignment(Pos.CENTER);
-		hBox2.setBackground(new Background(new BackgroundFill(root.getBackground().getFills().get(0).getFill(), null, null)));
+		HBox thumbnailBox = new HBox();
+		thumbnailBox.getChildren().add(thumbnail);
+		thumbnailBox.setAlignment(Pos.CENTER);
 
-		HBox hBox = new HBox(20);
-		hBox.getChildren().addAll(perspective1, perspective2);
-		hBox.setAlignment(Pos.CENTER);
-		hBox.setLayoutY(HEIGHT / 2);
-		root.getChildren().addAll(hBox, hBox2);
+		HBox persectiveBox = new HBox(20);
+		persectiveBox.getChildren().addAll(perspective1, perspective2);
+		persectiveBox.setAlignment(Pos.CENTER);
+		persectiveBox.setLayoutY(HEIGHT / 2);
+		root.getChildren().addAll(persectiveBox, thumbnailBox);
 
-		VBox.setVgrow(hBox, Priority.ALWAYS);
+		VBox.setVgrow(persectiveBox, Priority.ALWAYS);
 	}
 
 	public static void main(String[] args) {
