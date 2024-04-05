@@ -20,21 +20,19 @@ public class PerspectiveController {
 	}
     
 	public void handleMousePressed(MouseEvent event) {
-
+		previousX = event.getX();
+		previousY = event.getY();
 	}
 
 	public void handleMouseDragged(MouseEvent event) {
 		double deltaX = event.getX() - previousX;
     	double deltaY = event.getY() - previousY;
-    	previousX = event.getX();
-    	previousY = event.getY();
     	Point2D translation = new Point2D(deltaX, deltaY);
     	operationManager.executeOperation(new Translate(imageView, translation));
 	}
 
 	public void handleMouseScrolled(ScrollEvent event) {
 		double deltaY = event.getDeltaY();
-
 		double zoom;
 
 		if(deltaY > 0) {
