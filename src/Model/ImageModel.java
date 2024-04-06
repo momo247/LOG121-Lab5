@@ -13,6 +13,7 @@ public class ImageModel extends Observable {
 
 	public void setPath(String path) {
 		this.path = path;
+		notifyObserver();
 	}
 
 	public Image getImage() {
@@ -21,6 +22,7 @@ public class ImageModel extends Observable {
 
 	public void setImage(Image image) {
 		this.image = image;
+		notifyObserver();
 	}
 	
 }
