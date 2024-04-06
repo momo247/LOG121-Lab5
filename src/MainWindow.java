@@ -1,5 +1,5 @@
 import Controller.ImageController;
-import Controller.OperationManager;
+import Controller.CommandManager;
 import Controller.PerspectiveController;
 import Model.ImageModel;
 import View.PersepectiveImageView;
@@ -38,7 +38,7 @@ public class MainWindow extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		OperationManager operationManager = OperationManager.getInstance();
+		CommandManager operationManager = CommandManager.getInstance();
 		iModel1 = new ImageModel();
 		iModel2 = new ImageModel();
 		iModel3 = new ImageModel();
@@ -52,9 +52,9 @@ public class MainWindow extends Application {
 		perspectiveImageView1 = pImageView1.getImageView();
 		perspectiveImageView2 = pImageView2.getImageView();
 
-		iController = new ImageController(iModel1, iModel2, iModel3, tImageView);
-		pController1 = new PerspectiveController(operationManager, perspectiveImageView1);
-		pController2 = new PerspectiveController(operationManager, perspectiveImageView2);
+		iController = new ImageController(iModel1, iModel2, iModel3);
+		pController1 = new PerspectiveController(operationManager, pImageView1);
+		pController2 = new PerspectiveController(operationManager, pImageView2);
 		iModel1.addObserver(tImageView);
 		iModel2.addObserver(pImageView1);
 		iModel3.addObserver(pImageView2);

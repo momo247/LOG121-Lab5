@@ -3,12 +3,12 @@ package Controller;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 
-public class Translate extends Operation {
+public class TranslateCommand extends Command {
 
 	private ImageView imageView;
 	private Point2D translation;
 
-	public Translate(ImageView imageView, Point2D translation) {
+	public TranslateCommand(ImageView imageView, Point2D translation) {
 		this.imageView = imageView;
 		this.translation = translation;
 	}

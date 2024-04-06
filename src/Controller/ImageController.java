@@ -2,20 +2,17 @@ package Controller;
 
 import java.io.File;
 import Model.ImageModel;
-import View.ThumbnailImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 
 public class ImageController {
 
 	private ImageModel imageModel1, imageModel2, imageModel3;
-    private ThumbnailImageView thumbnailView;
 
-    public ImageController(ImageModel imageModel1, ImageModel imageModel2, ImageModel imageModel3, ThumbnailImageView thumbnailView) {
+    public ImageController(ImageModel imageModel1, ImageModel imageModel2, ImageModel imageModel3) {
         this.imageModel1 = imageModel1;
         this.imageModel2 = imageModel2;
         this.imageModel3 = imageModel3;
-        this.thumbnailView = thumbnailView;
     }
 
 	public void selectImage() {

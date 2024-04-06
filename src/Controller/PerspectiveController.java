@@ -1,44 +1,50 @@
 package Controller;
 
+import Model.PerspectiveModel;
+import View.PersepectiveImageView;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
 public class PerspectiveController {
 
 	private static final double ZOOM_FACTOR = 0.1;
-	private OperationManager operationManager;
-	private ImageView imageView;
-	private double previousX, previousY;
+	private CommandManager commandManager;
+	private PersepectiveImageView imageView;
+	private double previousX, previousY, totalZoom = 1;
+	private PerspectiveModel model;
 
-	public PerspectiveController(OperationManager operationManager, ImageView imageView) {
-		this.operationManager = operationManager;
+	public PerspectiveController(CommandManager commandManager, PersepectiveImageView imageView) {
+		this.commandManager = commandManager;
 		this.imageView = imageView;
 		previousX = 0;
 		previousY = 0;
+		model = new PerspectiveModel();
+		model.addObserver(imageView);
 	}
 
 	public void handleMouseEntered() {
-		imageView.setCursor(Cursor.OPEN_HAND);
+		imageView.getImageView().setCursor(Cursor.OPEN_HAND);
 	}
     
 	public void handleMousePressed(MouseEvent event) {
-		imageView.setCursor(Cursor.CLOSED_HAND);
+		imageView.getImageView().setCursor(Cursor.CLOSED_HAND);
 		previousX = event.getX();
 		previousY = event.getY();
 	}
 
 	public void handleMouseReleased() {
-		imageView.setCursor(Cursor.OPEN_HAND);
+		imageView.getImageView().setCursor(Cursor.OPEN_HAND);
 	}
 
 	public void handleMouseDragged(MouseEvent event) {
 		double deltaX = event.getX() - previousX;
     	double deltaY = event.getY() - previousY;
     	Point2D translation = new Point2D(deltaX, deltaY);
-    	operationManager.executeOperation(new Translate(imageView, translation));
+		Point2D location  = new Point2D(imageView.getImageView().localToScene(0,0).getX() + translation.getX(), imageView.getImageView().localToScene(0,0).getY() + translation.getY());
+		model.setLocation(location);
+    	commandManager.executeCommand(new TranslateCommand(imageView.getImageView(), translation));
 	}
 
 	public void handleMouseScrolled(ScrollEvent event) {
@@ -50,7 +56,11 @@ public class PerspectiveController {
 		} else {
 			zoom = 1 - ZOOM_FACTOR;
 		}
-		operationManager.executeOperation(new Zoom(imageView, zoom));
+		totalZoom *= zoom;
+		if(totalZoom > 0.5) {
+			model.setScale(totalZoom);
+			commandManager.executeCommand(new ZoomCommand(imageView.getImageView(), zoom));
+		}
 	}
 
 	/*public void zoom(Double scale) {

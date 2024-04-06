@@ -2,6 +2,7 @@ package View;
 
 import Model.ImageModel;
 import Model.Observable;
+import Model.PerspectiveModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -31,9 +32,14 @@ public class PersepectiveImageView implements Observer {
 
 	@Override
 	public void update(Observable observable) {
-		if (observable instanceof ImageModel) {
-            ImageModel imageModel = (ImageModel) observable;
-            display(imageModel.getImage());
+		if(observable instanceof ImageModel) {
+			ImageModel iModel = (ImageModel) observable;
+			this.setImage(iModel.getImage());
+		} else if (observable instanceof PerspectiveModel) {
+            PerspectiveModel model = (PerspectiveModel) observable;
+			
+			System.out.println(model.getLocation());
+			System.out.println(model.getScale());
         }
 	}
 	

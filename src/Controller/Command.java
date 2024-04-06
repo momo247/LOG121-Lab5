@@ -1,6 +1,6 @@
 package Controller;
 
-public abstract class Operation {
+public abstract class Command {
 
 	protected PerspectiveController perspectiveController;
 
