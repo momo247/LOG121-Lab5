@@ -84,8 +84,6 @@ public class PerspectiveController {
 		commandManager.executeCommand(command);
 	}
 
-	
-
 	public void undo() {
 		commandManager.undo();
 	}

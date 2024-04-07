@@ -14,7 +14,7 @@ public class PerspectiveModel extends Observable {
 
 	public void setScale(Double scale) {
 		this.scale = scale;
-		//notifyObserver();
+		notifyObserver();
 	}
 
 	public Point2D getLocation() {
@@ -23,14 +23,7 @@ public class PerspectiveModel extends Observable {
 
 	public void setLocation(Point2D location) {
 		this.location = location;
-		//notifyObserver();
-	}
-
-	/*public Memento createMemento() {
-		return new Memento(this);
-	}*/
-
-	public void restoreFromMemento() {
 		notifyObserver();
 	}
+
 }

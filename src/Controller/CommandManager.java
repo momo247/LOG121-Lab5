@@ -22,21 +22,16 @@ public class CommandManager {
 		if(index < 0 || history.size() == 0) {
 			return;
 		}
-		System.out.print("Undo index : " + index);
 		Command command = history.get(index--);
-		System.out.println(" -> " + index);
 		command.undo();
 	}
 
 	public void redo() {
-		System.out.print("Redo index : " + index);
-		index++;
-		if (index > history.size() - 1) {
-			return;
+		if (index < history.size() - 1) {
+			index++;
+			Command command = history.get(index);
+			command.execute();
 		}
-		Command command = history.get(index);
-		System.out.println(" -> " + index);
-		command.execute();
 	}
 
 	public void addCommand(Command command) {
