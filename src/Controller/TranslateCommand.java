@@ -6,22 +6,29 @@ import javafx.scene.image.ImageView;
 public class TranslateCommand extends Command {
 
 	private ImageView imageView;
-	private Point2D translation;
+	private Point2D translation, location;
 
 	public TranslateCommand(ImageView imageView, Point2D translation) {
 		this.imageView = imageView;
 		this.translation = translation;
+		location = new Point2D(imageView.getTranslateX() + translation.getX(), imageView.getTranslateY() + translation.getY());
 	}
 
 	@Override
 	public void execute() {
-		imageView.setTranslateX(imageView.getTranslateX() + translation.getX());
-		imageView.setTranslateY(imageView.getTranslateY() + translation.getY());
+		imageView.setTranslateX(location.getX());
+		imageView.setTranslateY(location.getY());
+	}
+
+	public Point2D getLocation() {
+		return this.location;
 	}
 
 	@Override
 	public void undo() {
-		
+		location = new Point2D(imageView.getTranslateX() - translation.getX(), imageView.getTranslateY() - translation.getY());
+		imageView.setTranslateX(location.getX());
+		imageView.setTranslateY(location.getY());
 	}
 	
 }

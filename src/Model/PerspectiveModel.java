@@ -5,7 +5,7 @@ import javafx.geometry.Point2D;
 public class PerspectiveModel extends Observable {
 	
 	private double scale = 1;
-	private Point2D location;
+	private Point2D location = new Point2D(0, 0);
 
 
 	public double getScale() {
@@ -14,7 +14,7 @@ public class PerspectiveModel extends Observable {
 
 	public void setScale(Double scale) {
 		this.scale = scale;
-		notifyObserver();
+		//notifyObserver();
 	}
 
 	public Point2D getLocation() {
@@ -23,7 +23,14 @@ public class PerspectiveModel extends Observable {
 
 	public void setLocation(Point2D location) {
 		this.location = location;
-		notifyObserver();
+		//notifyObserver();
 	}
 
+	/*public Memento createMemento() {
+		return new Memento(this);
+	}*/
+
+	public void restoreFromMemento() {
+		notifyObserver();
+	}
 }
