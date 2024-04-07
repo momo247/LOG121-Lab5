@@ -18,6 +18,7 @@ public abstract class Observable {
 		if(observer != null) {
 			observer.update(this);
 		}
+		System.out.println("Perspective model updated!");
 	}
 	
 }

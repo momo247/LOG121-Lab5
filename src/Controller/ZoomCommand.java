@@ -2,12 +2,13 @@ package Controller;
 
 import javafx.scene.image.ImageView;
 
-public class Zoom extends Operation {
+public class ZoomCommand extends Command {
 
 	private ImageView imageView;
 	private double scale;
 
-	public Zoom(ImageView imageView, double scale) {
+
+	public ZoomCommand(ImageView imageView, double scale) {
 		this.imageView = imageView;
 		this.scale = scale;
 	}
@@ -20,7 +21,8 @@ public class Zoom extends Operation {
 
 	@Override
 	public void undo() {
-		
+		imageView.setScaleX(imageView.getScaleX() / scale);		
+		imageView.setScaleY(imageView.getScaleY() / scale);
 	}
 	
 }

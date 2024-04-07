@@ -1,5 +1,5 @@
 import Controller.ImageController;
-import Controller.OperationManager;
+import Controller.CommandManager;
 import Controller.PerspectiveController;
 import Model.ImageModel;
 import View.PersepectiveImageView;
@@ -38,7 +38,7 @@ public class MainWindow extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		OperationManager operationManager = OperationManager.getInstance();
+		CommandManager operationManager = CommandManager.getInstance();
 		iModel1 = new ImageModel();
 		iModel2 = new ImageModel();
 		iModel3 = new ImageModel();
@@ -52,9 +52,9 @@ public class MainWindow extends Application {
 		perspectiveImageView1 = pImageView1.getImageView();
 		perspectiveImageView2 = pImageView2.getImageView();
 
-		iController = new ImageController(iModel1, iModel2, iModel3, tImageView);
-		pController1 = new PerspectiveController(operationManager, perspectiveImageView1);
-		pController2 = new PerspectiveController(operationManager, perspectiveImageView2);
+		iController = new ImageController(iModel1, iModel2, iModel3);
+		pController1 = new PerspectiveController(operationManager, pImageView1);
+		pController2 = new PerspectiveController(operationManager, pImageView2);
 		iModel1.addObserver(tImageView);
 		iModel2.addObserver(pImageView1);
 		iModel3.addObserver(pImageView2);
@@ -67,20 +67,29 @@ public class MainWindow extends Application {
 		fileMenu.getItems().addAll(openItem, saveItem, new SeparatorMenuItem(), exitItem);
 		Menu optionMenu = new Menu("Options");
 		Menu copyMenu = new Menu("Copy");
+		Menu editMenu = new Menu("Edit");
 		MenuItem pasteItem = new MenuItem("Paste");
 		MenuItem allItem = new MenuItem("Copy all");
 		MenuItem scaleItem = new MenuItem("Copy scale");
 		MenuItem translationItem = new MenuItem("Copy translation");
+		MenuItem undoItem = new MenuItem("Undo");
+		MenuItem redoItem = new MenuItem("Redo");
 		copyMenu.getItems().addAll(allItem, scaleItem, translationItem);
 		optionMenu.getItems().addAll(copyMenu, pasteItem);
+		editMenu.getItems().addAll(undoItem, redoItem);
 		
-		menuBar.getMenus().addAll(fileMenu, optionMenu);
+		menuBar.getMenus().addAll(fileMenu, editMenu, optionMenu);
 		menuBar.setUseSystemMenuBar(true);
 		root.getChildren().add(menuBar);
 
 		openItem.setOnAction(e -> openImage(""));
 		saveItem.setOnAction(e -> saveModels());
 		exitItem.setOnAction(e -> primaryStage.close());
+
+		undoItem.setOnAction(e -> pController1.undo());
+		undoItem.setOnAction(e -> pController2.undo());
+		redoItem.setOnAction(e -> pController1.redo());
+		redoItem.setOnAction(e -> pController2.redo());
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT);
 
@@ -134,19 +143,20 @@ public class MainWindow extends Application {
 		perspectiveImageView1.setOnMousePressed(e -> pController1.handleMousePressed(e));
 		perspectiveImageView2.setOnMousePressed(e -> pController2.handleMousePressed(e));
 
-		perspectiveImageView1.setOnMouseReleased(e -> pController1.handleMouseReleased());
-		perspectiveImageView2.setOnMouseReleased(e -> pController2.handleMouseReleased());
+		perspectiveImageView1.setOnMouseReleased(e -> pController1.handleMouseReleased(e));
+		perspectiveImageView2.setOnMouseReleased(e -> pController2.handleMouseReleased(e));
 
 		perspectiveImageView1.setOnMouseDragged(e -> pController1.handleMouseDragged(e));
 		perspectiveImageView2.setOnMouseDragged(e -> pController2.handleMouseDragged(e));
 
 		perspectiveImageView1.setOnScroll(e -> pController1.handleMouseScrolled(e));
 		perspectiveImageView2.setOnScroll(e -> pController2.handleMouseScrolled(e));
-
+		
 		thumbnail.getChildren().add(thumbnailImageView);
 		perspective1.getChildren().add(perspectiveImageView1);
 		perspective2.getChildren().add(perspectiveImageView2);
-		
+
+		System.out.println(perspective1.localToScene(0, 0).getX() + ", " + perspective1.localToScene(0, 0).getY());
 		HBox thumbnailBox = new HBox();
 		thumbnailBox.getChildren().add(thumbnail);
 		thumbnailBox.setAlignment(Pos.CENTER);

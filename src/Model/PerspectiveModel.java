@@ -4,10 +4,11 @@ import javafx.geometry.Point2D;
 
 public class PerspectiveModel extends Observable {
 	
-	private Double scale;
-	private Point2D translation, mouseClickPosition;
+	private double scale = 1;
+	private Point2D location = new Point2D(0, 0);
 
-	public Double getScale() {
+
+	public double getScale() {
 		return scale;
 	}
 
@@ -16,22 +17,13 @@ public class PerspectiveModel extends Observable {
 		notifyObserver();
 	}
 
-	public Point2D getTranslation() {
-		return translation;
+	public Point2D getLocation() {
+		return location;
 	}
 
-	public void setTranslation(Point2D translation) {
-		this.translation = translation;
+	public void setLocation(Point2D location) {
+		this.location = location;
 		notifyObserver();
 	}
 
-	public Point2D getMouseClickPosition() {
-		return mouseClickPosition;
-	}
-
-	public void setMouseClickPosition(Point2D mouseClickPosition) {
-		this.mouseClickPosition = mouseClickPosition;
-		notifyObserver();
-	}
-	
 }

@@ -14,7 +14,7 @@ public class ThumbnailImageView implements Observer {
     }
 
 	public void display(Image image) {
-		imageView.setImage(image);
+
 	}
 
 	public ImageView getImageView() {
@@ -33,7 +33,7 @@ public class ThumbnailImageView implements Observer {
 	public void update(Observable observable) {
 		if (observable instanceof ImageModel) {
             ImageModel imageModel = (ImageModel) observable;
-            display(imageModel.getImage());
+            this.setImage(imageModel.getImage());
         }
 	}
 	

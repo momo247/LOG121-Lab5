@@ -14,6 +14,7 @@ public class ImageModel extends Observable {
 	public void setPath(String path) {
 		this.path = path;
 		notifyObserver();
+		System.out.println(path);
 	}
 
 	public Image getImage() {
@@ -23,6 +24,7 @@ public class ImageModel extends Observable {
 	public void setImage(Image image) {
 		this.image = image;
 		notifyObserver();
+		System.out.println(image.toString());
 	}
 	
 }
