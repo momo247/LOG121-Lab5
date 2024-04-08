@@ -5,7 +5,6 @@ import javafx.scene.image.ImageView;
 
 public class TranslateCommand extends Command {
 
-	private ImageView imageView;
 	private Point2D translation, location;
 
 	/*public TranslateCommand(ImageView imageView, Point2D translation) {
