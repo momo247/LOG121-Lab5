@@ -14,7 +14,6 @@ public class Serialize {
 			FileOutputStream fileOut = new FileOutputStream(fileName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(wrapper);
-			System.out.println("Models have been saved!");
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -28,11 +27,11 @@ public class Serialize {
 			FileInputStream fileIn = new FileInputStream(fileName);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			wrapper = (ModelWrapper) in.readObject();
-			System.out.println("Models have been read!");
 			in.close();
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+
 		return wrapper;
 	}
 }

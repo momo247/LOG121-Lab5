@@ -1,5 +1,4 @@
 import Controller.ImageController;
-import Controller.CommandManager;
 import Controller.PerspectiveController;
 import Controller.Serialize;
 import Model.ImageModel;
@@ -42,7 +41,6 @@ public class MainWindow extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		CommandManager operationManager = CommandManager.getInstance();
 		iModel1 = new ImageModel();
 		iModel2 = new ImageModel();
 		iModel3 = new ImageModel();
@@ -60,8 +58,8 @@ public class MainWindow extends Application {
 		pModel2 = new PerspectiveModel();
 
 		iController = new ImageController(iModel1, iModel2, iModel3);
-		pController1 = new PerspectiveController(operationManager, pModel1, pImageView1);
-		pController2 = new PerspectiveController(operationManager, pModel2, pImageView2);
+		pController1 = new PerspectiveController(pModel1, pImageView1);
+		pController2 = new PerspectiveController(pModel2, pImageView2);
 
 		iModel1.addObserver(tImageView);
 		iModel2.addObserver(pImageView1);
@@ -115,14 +113,9 @@ public class MainWindow extends Application {
 	}
 
 	public void saveModels() {
-		// faire en sorte que perspectiveView save/set les valeurs du wrapper
 		pModel1 = pController1.getPerspectiveModel();
 		pModel2 = pController2.getPerspectiveModel();
 		ModelWrapper wrapper = new ModelWrapper(pModel1, pModel2);
-		/*PerspectiveModel p1 = new PerspectiveModel(); p1.setScale(0.5);
-		PerspectiveModel p2 = new PerspectiveModel(); p2.setScale(2.6);
-		ModelWrapper wrapper  =new ModelWrapper(p1, p2);*/
-		System.out.println(pModel1.getScale() + ", " + pModel1.getX() + ", " + pModel1.getY());
 		Serialize.serializeModels(wrapper, "models.ser");
 	}
 
@@ -130,7 +123,6 @@ public class MainWindow extends Application {
 		ModelWrapper wrapper = Serialize.deserializeModels("models.ser");
 		pController1.loadModel(wrapper.getPerspectiveModel1());
 		pController2.loadModel(wrapper.getPerspectiveModel2());
-		System.out.println(wrapper.getPerspectiveModel1().getScale());
 	}
 
 	public void openImage(String path) {
@@ -182,7 +174,6 @@ public class MainWindow extends Application {
 		perspective1.getChildren().add(perspectiveImageView1);
 		perspective2.getChildren().add(perspectiveImageView2);
 
-		System.out.println(perspective1.localToScene(0, 0).getX() + ", " + perspective1.localToScene(0, 0).getY());
 		HBox thumbnailBox = new HBox();
 		thumbnailBox.getChildren().add(thumbnail);
 		thumbnailBox.setAlignment(Pos.CENTER);
