@@ -105,7 +105,7 @@ public class MainWindow extends Application {
 		redoItem.setOnAction(e -> pController2.redo());
 
 		allItem.setOnAction(e -> copyModel());
-		scaleItem.setOnAction(e - > copyScale());
+		scaleItem.setOnAction(e -> copyScale());
 		translationItem.setOnAction(e -> copyTranslation());
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT);
