@@ -47,7 +47,7 @@ public class PerspectiveController {
 		Command command = new TranslateCommand(imageView.getImageView(), translation);
 		commandManager.addCommand(command);
 		command.execute();
-		System.out.println("Model : " + model.getScale());
+		System.out.println("Model : " + model.getScale() + ", " + model.getX() + ", " + model.getY());
 	}
 
 	public void handleMouseDragged(MouseEvent event) {

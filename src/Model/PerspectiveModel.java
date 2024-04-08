@@ -8,6 +8,7 @@ public class PerspectiveModel extends Observable implements Serializable {
 	private double scale = 1;
 	private transient Point2D location = new Point2D(0, 0);
 	private double x, y;
+
 	public double getScale() {
 		return scale;
 	}
@@ -26,6 +27,14 @@ public class PerspectiveModel extends Observable implements Serializable {
 		x = location.getX();
 		y = location.getY();
 		notifyObserver();
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public void setY(double y) {
+		this.y = y;
 	}
 
 	public double getX() {

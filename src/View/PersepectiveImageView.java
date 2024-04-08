@@ -39,10 +39,11 @@ public class PersepectiveImageView implements Observer {
             PerspectiveModel model = (PerspectiveModel) observable;
 			
 			if(model != null) {
-				System.out.println("Model location : " + model.getLocation());
+				System.out.println("Model location : " + model.getX() + ", " + model.getY());
 				System.out.println("Model scale : " + model.getScale());
-				/*this.imageView.setTranslateX(model.getLocation().getX());
-				this.imageView.setTranslateY(model.getLocation().getY());*/
+				System.out.println("Model scale : " + model.getScale());
+				this.imageView.setTranslateX(model.getX());
+				this.imageView.setTranslateY(model.getY());
 				this.imageView.setScaleX(model.getScale());
 				this.imageView.setScaleY(model.getScale());
 			}
