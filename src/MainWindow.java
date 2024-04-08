@@ -104,6 +104,10 @@ public class MainWindow extends Application {
 		redoItem.setOnAction(e -> pController1.redo());
 		redoItem.setOnAction(e -> pController2.redo());
 
+		allItem.setOnAction(e -> copyModel());
+		scaleItem.setOnAction(e - > copyScale());
+		translationItem.setOnAction(e -> copyTranslation());
+
 		Scene scene = new Scene(root, WIDTH, HEIGHT);
 
 		primaryStage.setScene(scene);
@@ -123,6 +127,18 @@ public class MainWindow extends Application {
 		ModelWrapper wrapper = Serialize.deserializeModels("models.ser");
 		pController1.loadModel(wrapper.getPerspectiveModel1());
 		pController2.loadModel(wrapper.getPerspectiveModel2());
+	}
+
+	public void copyModel() {
+
+	}
+
+	public void copyScale() {
+
+	}
+
+	public void copyTranslation() {
+
 	}
 
 	public void openImage(String path) {
@@ -164,8 +180,8 @@ public class MainWindow extends Application {
 		perspectiveImageView1.setOnMouseReleased(e -> pController1.handleMouseReleased(e));
 		perspectiveImageView2.setOnMouseReleased(e -> pController2.handleMouseReleased(e));
 
-		perspectiveImageView1.setOnMouseDragged(e -> pController1.handleMouseDragged(e));
-		perspectiveImageView2.setOnMouseDragged(e -> pController2.handleMouseDragged(e));
+		perspectiveImageView1.setOnMouseDragged(e -> pController1.handleMouseDragged(e)); // delete ca a la fin
+		perspectiveImageView2.setOnMouseDragged(e -> pController2.handleMouseDragged(e)); // delete ca a la fin
 
 		perspectiveImageView1.setOnScroll(e -> pController1.handleMouseScrolled(e));
 		perspectiveImageView2.setOnScroll(e -> pController2.handleMouseScrolled(e));
