@@ -1,8 +1,13 @@
 import Controller.ImageController;
 import Controller.PerspectiveController;
 import Controller.Serialize;
+import Model.CopyBothStrategy;
+import Model.CopyScaleStrategy;
+import Model.CopyStrategy;
+import Model.CopyTranslateStrategy;
 import Model.ImageModel;
 import Model.ModelWrapper;
+import Model.PasteManager;
 import Model.PerspectiveModel;
 import View.PersepectiveImageView;
 import View.ThumbnailImageView;
@@ -32,10 +37,11 @@ public class MainWindow extends Application {
 	private ImageView thumbnailImageView, perspectiveImageView1, perspectiveImageView2;
 	private ImageModel iModel1, iModel2, iModel3;
 	private ThumbnailImageView tImageView;
-	private PerspectiveModel pModel1, pModel2;
+	private PerspectiveModel pModel1, pModel2, source, destination;
 	private PersepectiveImageView pImageView1, pImageView2;
 	private ImageController iController;
 	private PerspectiveController pController1, pController2;
+	private PasteManager pasteManager;
 	private MenuBar menuBar;
 	private VBox root = new VBox();
 
@@ -47,9 +53,7 @@ public class MainWindow extends Application {
 		tImageView = new ThumbnailImageView();
 		pImageView1 = new PersepectiveImageView();
 		pImageView2 = new PersepectiveImageView();
-		pImageView1.getImageView().toBack();
-		pImageView2.getImageView().toBack();
-
+		
 		thumbnailImageView = tImageView.getImageView();
 		perspectiveImageView1 = pImageView1.getImageView();
 		perspectiveImageView2 = pImageView2.getImageView();
@@ -57,16 +61,16 @@ public class MainWindow extends Application {
 		pModel1 = new PerspectiveModel();
 		pModel2 = new PerspectiveModel();
 
-		iController = new ImageController(iModel1, iModel2, iModel3);
-		pController1 = new PerspectiveController(pModel1, pImageView1);
-		pController2 = new PerspectiveController(pModel2, pImageView2);
-
 		iModel1.addObserver(tImageView);
 		iModel2.addObserver(pImageView1);
 		iModel3.addObserver(pImageView2);
 
 		pModel1.addObserver(pImageView1);
 		pModel2.addObserver(pImageView2);
+		
+		iController = new ImageController(iModel1, iModel2, iModel3);
+		pController1 = new PerspectiveController(pModel1, pImageView1);
+		pController2 = new PerspectiveController(pModel2, pImageView2);
 
 		menuBar = new MenuBar();
 		Menu fileMenu = new Menu("File");
@@ -86,7 +90,7 @@ public class MainWindow extends Application {
 		MenuItem translationItem = new MenuItem("Copy translation");
 		MenuItem undoItem = new MenuItem("Undo");
 		MenuItem redoItem = new MenuItem("Redo");
-		copyMenu.getItems().addAll(allItem, scaleItem, translationItem);
+		copyMenu.getItems().addAll(scaleItem, translationItem, allItem);
 		optionMenu.getItems().addAll(copyMenu, pasteItem);
 		editMenu.getItems().addAll(undoItem, redoItem);
 		
@@ -107,6 +111,16 @@ public class MainWindow extends Application {
 		allItem.setOnAction(e -> copyModel());
 		scaleItem.setOnAction(e -> copyScale());
 		translationItem.setOnAction(e -> copyTranslation());
+		pasteItem.setOnAction(e -> paste());
+
+		pImageView1.getImageView().setOnMouseClicked(e -> {
+			source = pController1.getPerspectiveModel();
+			destination = pController2.getPerspectiveModel();
+		});
+		pImageView2.getImageView().setOnMouseClicked(e -> {
+			source = pController2.getPerspectiveModel();
+			destination = pController1.getPerspectiveModel();
+		});
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT);
 
@@ -130,15 +144,19 @@ public class MainWindow extends Application {
 	}
 
 	public void copyModel() {
-
+		pasteManager = new PasteManager(source, destination, new CopyBothStrategy());
 	}
 
 	public void copyScale() {
-
+		pasteManager = new PasteManager(source, destination, new CopyScaleStrategy());
 	}
 
 	public void copyTranslation() {
+		pasteManager = new PasteManager(source, destination, new CopyTranslateStrategy());
+	}
 
+	public void paste() {
+		pasteManager.paste();
 	}
 
 	public void openImage(String path) {

@@ -18,7 +18,8 @@ public class PerspectiveController {
 	public PerspectiveController(PerspectiveModel model, PersepectiveImageView imageView) {
 		this.commandManager = CommandManager.getInstance();
 		this.imageView = imageView;
-		this.model = new PerspectiveModel();
+		this.model = model;
+		//this.model = new PerspectiveModel();
 	}
 
 	public void handleMouseEntered() {
@@ -42,19 +43,20 @@ public class PerspectiveController {
 		double deltaX = event.getX() - initialX;
     	double deltaY = event.getY() - initialY;
     	Point2D translation = new Point2D(deltaX, deltaY);
-		model.setX(translation.getX());
-		model.setY(translation.getY());
-		Command command = new TranslateCommand(imageView.getImageView(), translation);
+		/*model.setX(translation.getX());
+		model.setY(translation.getY());*/
+		//Command command = new TranslateCommand(imageView.getImageView(), translation);
+		Command command = new TranslateCommand(this, translation);
 		commandManager.addCommand(command);
 		commandManager.executeCommand(command);
 	}
 
 	public void handleMouseDragged(MouseEvent event) {
-		/*double deltaX = event.getX() - previousX;
-    	double deltaY = event.getY() - previousY;
+		/*double deltaX = event.getX() - initialX;
+    	double deltaY = event.getY() - initialY;
     	Point2D translation = new Point2D(deltaX, deltaY);
-		Command command = new TranslateCommand(imageView.getImageView(), translation);
-		this.command = command;
+		Command command = new TranslateCommand(this, translation);
+		//this.command = command;
 		commandManager.addCommand(command);
     	commandManager.executeCommand(command);*/
 	}
@@ -76,8 +78,9 @@ public class PerspectiveController {
 			return;
 		}
 		
-		model.setScale(totalZoom);
-		Command command = new ZoomCommand(imageView.getImageView(), zoom);
+		//model.setScale(totalZoom);
+		//Command command = new ZoomCommand(imageView.getImageView(), zoom);
+		Command command = new ZoomCommand(this, zoom);
 		commandManager.addCommand(command);
 		commandManager.executeCommand(command);
 	}
@@ -86,10 +89,7 @@ public class PerspectiveController {
 		this.model.setX(model.getX());
 		this.model.setY(model.getY());
 		this.model.setScale(model.getScale());
-		imageView.getImageView().setScaleX(model.getScale());
-		imageView.getImageView().setScaleY(model.getScale());
-		imageView.getImageView().setTranslateX(model.getX());
-		imageView.getImageView().setTranslateY(model.getY());
+		
 		totalZoom = model.getScale();
 	}
 
