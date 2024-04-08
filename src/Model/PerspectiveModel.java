@@ -1,12 +1,11 @@
 package Model;
 
-import javafx.geometry.Point2D;
+import java.io.Serializable;
 
-public class PerspectiveModel extends Observable {
+public class PerspectiveModel extends Observable implements Serializable {
 	
 	private double scale = 1;
-	private Point2D location = new Point2D(0, 0);
-
+	private double x, y;
 
 	public double getScale() {
 		return scale;
@@ -17,13 +16,22 @@ public class PerspectiveModel extends Observable {
 		notifyObserver();
 	}
 
-	public Point2D getLocation() {
-		return location;
+	public void setX(double x) {
+		this.x = x;
+		notifyObserver();
 	}
 
-	public void setLocation(Point2D location) {
-		this.location = location;
+	public void setY(double y) {
+		this.y = y;
 		notifyObserver();
+	}
+
+	public double getX() {
+		return this.x;
+	}
+
+	public double getY() {
+		return this.y;
 	}
 
 }
