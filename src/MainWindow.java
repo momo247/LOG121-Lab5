@@ -1,7 +1,10 @@
 import Controller.ImageController;
 import Controller.CommandManager;
 import Controller.PerspectiveController;
+import Controller.Serialize;
 import Model.ImageModel;
+import Model.ModelWrapper;
+import Model.PerspectiveModel;
 import View.PersepectiveImageView;
 import View.ThumbnailImageView;
 import javafx.application.Application;
@@ -30,6 +33,7 @@ public class MainWindow extends Application {
 	private ImageView thumbnailImageView, perspectiveImageView1, perspectiveImageView2;
 	private ImageModel iModel1, iModel2, iModel3;
 	private ThumbnailImageView tImageView;
+	private PerspectiveModel pModel1, pModel2;
 	private PersepectiveImageView pImageView1, pImageView2;
 	private ImageController iController;
 	private PerspectiveController pController1, pController2;
@@ -52,19 +56,29 @@ public class MainWindow extends Application {
 		perspectiveImageView1 = pImageView1.getImageView();
 		perspectiveImageView2 = pImageView2.getImageView();
 
+		pModel1 = new PerspectiveModel();
+		pModel2 = new PerspectiveModel();
+
 		iController = new ImageController(iModel1, iModel2, iModel3);
-		pController1 = new PerspectiveController(operationManager, pImageView1);
-		pController2 = new PerspectiveController(operationManager, pImageView2);
+		pController1 = new PerspectiveController(operationManager, pModel1, pImageView1);
+		pController2 = new PerspectiveController(operationManager, pModel2, pImageView2);
+
 		iModel1.addObserver(tImageView);
 		iModel2.addObserver(pImageView1);
 		iModel3.addObserver(pImageView2);
 
+		pModel1.addObserver(pImageView1);
+		pModel2.addObserver(pImageView2);
+
 		menuBar = new MenuBar();
 		Menu fileMenu = new Menu("File");
+		Menu openMenu = new Menu("Open");
+		MenuItem openImageItem = new MenuItem("Open image");
+		MenuItem openfileItem = new MenuItem("Open file");
 		MenuItem saveItem = new MenuItem("Save");
-		MenuItem openItem = new MenuItem("Open");
 		MenuItem exitItem = new MenuItem("Exit");
-		fileMenu.getItems().addAll(openItem, saveItem, new SeparatorMenuItem(), exitItem);
+		openMenu.getItems().addAll(openImageItem, openfileItem);
+		fileMenu.getItems().addAll(openMenu, saveItem, new SeparatorMenuItem(), exitItem);
 		Menu optionMenu = new Menu("Options");
 		Menu copyMenu = new Menu("Copy");
 		Menu editMenu = new Menu("Edit");
@@ -82,7 +96,8 @@ public class MainWindow extends Application {
 		menuBar.setUseSystemMenuBar(true);
 		root.getChildren().add(menuBar);
 
-		openItem.setOnAction(e -> openImage(""));
+		openImageItem.setOnAction(e -> openImage(""));
+		openfileItem.setOnAction(e -> loadModels(""));
 		saveItem.setOnAction(e -> saveModels());
 		exitItem.setOnAction(e -> primaryStage.close());
 
@@ -100,11 +115,22 @@ public class MainWindow extends Application {
 	}
 
 	public void saveModels() {
-		System.out.println("Saving");
+		// faire en sorte que perspectiveView save/set les valeurs du wrapper
+		pModel1 = pController1.getPerspectiveModel();
+		pModel2 = pController2.getPerspectiveModel();
+		ModelWrapper wrapper = new ModelWrapper(pModel1, pModel2);
+		/*PerspectiveModel p1 = new PerspectiveModel(); p1.setScale(0.5);
+		PerspectiveModel p2 = new PerspectiveModel(); p2.setScale(2.6);
+		ModelWrapper wrapper  =new ModelWrapper(p1, p2);*/
+		System.out.println(pModel1.getScale() + ", " + pModel1.getX() + ", " + pModel1.getY());
+		Serialize.serializeModels(wrapper, "models.ser");
 	}
 
 	public void loadModels(String path) {
-		System.out.println("Loading");
+		ModelWrapper wrapper = Serialize.deserializeModels("models.ser");
+		pController1.loadModel(wrapper.getPerspectiveModel1());
+		pController2.loadModel(wrapper.getPerspectiveModel2());
+		System.out.println(wrapper.getPerspectiveModel1().getScale());
 	}
 
 	public void openImage(String path) {

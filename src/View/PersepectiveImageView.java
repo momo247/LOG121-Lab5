@@ -42,9 +42,9 @@ public class PersepectiveImageView implements Observer {
 				System.out.println("Model location : " + model.getLocation());
 				System.out.println("Model scale : " + model.getScale());
 				/*this.imageView.setTranslateX(model.getLocation().getX());
-				this.imageView.setTranslateY(model.getLocation().getY());
+				this.imageView.setTranslateY(model.getLocation().getY());*/
 				this.imageView.setScaleX(model.getScale());
-				this.imageView.setScaleY(model.getScale());*/
+				this.imageView.setScaleY(model.getScale());
 			}
         }
 	}

@@ -16,15 +16,13 @@ public class PerspectiveController {
 	private PerspectiveModel model;
 	private Point2D location;
 	private Command command;
-	private int index = 0;
 
-	public PerspectiveController(CommandManager commandManager, PersepectiveImageView imageView) {
+	public PerspectiveController(CommandManager commandManager, PerspectiveModel model, PersepectiveImageView imageView) {
 		this.commandManager = commandManager;
 		this.imageView = imageView;
 		previousX = 0;
 		previousY = 0;
-		model = new PerspectiveModel();
-		model.addObserver(imageView);
+		this.model = new PerspectiveModel();
 	}
 
 	public void handleMouseEntered() {
@@ -40,7 +38,6 @@ public class PerspectiveController {
 	public void handleMouseReleased(MouseEvent event) {
 		imageView.getImageView().setCursor(Cursor.OPEN_HAND);
 		addTranslate(event);
-		index++;
 	}
 
 	public void addTranslate(MouseEvent event) {
@@ -50,6 +47,7 @@ public class PerspectiveController {
 		Command command = new TranslateCommand(imageView.getImageView(), translation);
 		commandManager.addCommand(command);
 		command.execute();
+		System.out.println("Model : " + model.getScale());
 	}
 
 	public void handleMouseDragged(MouseEvent event) {
@@ -78,10 +76,26 @@ public class PerspectiveController {
 		}
 		
 		model.setScale(totalZoom);
+		System.out.println(totalZoom);
 		Command command = new ZoomCommand(imageView.getImageView(), zoom);
 		commandManager.addCommand(command);
-		index++;
 		commandManager.executeCommand(command);
+	}
+
+	public void loadModel(PerspectiveModel model) {
+		this.model.setLocation(new Point2D(model.getX(), model.getY()));
+		this.model.setScale(model.getScale());
+		//imageView.update(model);
+		imageView.getImageView().setScaleX(model.getScale());
+		imageView.getImageView().setScaleY(model.getScale());
+		imageView.getImageView().setTranslateX(model.getX());
+		imageView.getImageView().setTranslateY(model.getY());
+		totalZoom = model.getScale();
+		System.out.println("C Scale : " + model.getScale());
+	}
+
+	public PerspectiveModel getPerspectiveModel() {
+		return this.model;
 	}
 
 	public void undo() {
