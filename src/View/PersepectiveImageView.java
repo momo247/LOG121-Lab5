@@ -34,7 +34,7 @@ public class PersepectiveImageView implements Observer {
 	public void update(Observable observable) {
 		if(observable instanceof ImageModel) {
 			ImageModel iModel = (ImageModel) observable;
-			this.setImage(iModel.getImage());
+			this.setImage(new Image(iModel.getPath()));
 		} else if (observable instanceof PerspectiveModel) {
             PerspectiveModel model = (PerspectiveModel) observable;
 			if(model != null) {

@@ -33,7 +33,7 @@ public class ThumbnailImageView implements Observer {
 	public void update(Observable observable) {
 		if (observable instanceof ImageModel) {
             ImageModel imageModel = (ImageModel) observable;
-            this.setImage(imageModel.getImage());
+			this.setImage(new Image(imageModel.getPath()));
         }
 	}
 	

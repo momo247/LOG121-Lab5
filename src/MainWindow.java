@@ -34,7 +34,7 @@ public class MainWindow extends Application {
 	public static final double LIMIT = WIDTH / 2;
 
 	private ImageView thumbnailImageView, perspectiveImageView1, perspectiveImageView2;
-	private ImageModel iModel1, iModel2, iModel3;
+	private ImageModel iModel;
 	private ThumbnailImageView tImageView;
 	private PerspectiveModel pModel1, pModel2, source, destination;
 	private PersepectiveImageView pImageView1, pImageView2;
@@ -46,9 +46,7 @@ public class MainWindow extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		iModel1 = new ImageModel();
-		iModel2 = new ImageModel();
-		iModel3 = new ImageModel();
+		iModel = new ImageModel();
 		tImageView = new ThumbnailImageView();
 		pImageView1 = new PersepectiveImageView();
 		pImageView2 = new PersepectiveImageView();
@@ -60,14 +58,14 @@ public class MainWindow extends Application {
 		pModel1 = new PerspectiveModel();
 		pModel2 = new PerspectiveModel();
 
-		iModel1.addObserver(tImageView);
-		iModel2.addObserver(pImageView1);
-		iModel3.addObserver(pImageView2);
+		iModel.addObserver(tImageView);
+		iModel.addObserver(pImageView1);
+		iModel.addObserver(pImageView2);
 
 		pModel1.addObserver(pImageView1);
 		pModel2.addObserver(pImageView2);
 		
-		iController = new ImageController(iModel1, iModel2, iModel3);
+		iController = new ImageController(iModel);
 		pController1 = new PerspectiveController(pModel1, pImageView1);
 		pController2 = new PerspectiveController(pModel2, pImageView2);
 
@@ -122,7 +120,7 @@ public class MainWindow extends Application {
 		});
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT);
-
+		initView();
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Image viewer");
 		primaryStage.setResizable(false);
@@ -132,7 +130,7 @@ public class MainWindow extends Application {
 	public void saveModels() {
 		pModel1 = pController1.getPerspectiveModel();
 		pModel2 = pController2.getPerspectiveModel();
-		ModelWrapper wrapper = new ModelWrapper(pModel1, pModel2);
+		ModelWrapper wrapper = new ModelWrapper(pModel1, pModel2, iModel);
 		Serialize.serializeModels(wrapper, "models.ser");
 	}
 
@@ -140,6 +138,7 @@ public class MainWindow extends Application {
 		ModelWrapper wrapper = Serialize.deserializeModels("models.ser");
 		pController1.loadModel(wrapper.getPerspectiveModel1());
 		pController2.loadModel(wrapper.getPerspectiveModel2());
+		iModel.setPath(wrapper.getImageModel().getPath());
 	}
 
 	public void copyModel() {
@@ -160,6 +159,9 @@ public class MainWindow extends Application {
 
 	public void openImage(String path) {
 		iController.selectImage();
+	}
+	
+	public void initView() {
 		Pane thumbnail = new Pane();
 		Pane perspective1 = new Pane();
 		Pane perspective2 = new Pane();

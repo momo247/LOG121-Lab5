@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
+
 import javafx.scene.image.Image;
 
-public class ImageModel extends Observable {
+public class ImageModel extends Observable implements Serializable{
     
 	private String path;
-	private Image image;
 
 	public String getPath() {
 		return path;
@@ -13,15 +14,6 @@ public class ImageModel extends Observable {
 
 	public void setPath(String path) {
 		this.path = path;
-		notifyObserver();
-	}
-
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
 		notifyObserver();
 	}
 	

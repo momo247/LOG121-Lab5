@@ -1,23 +1,23 @@
 package Model;
 
+import java.util.ArrayList;
+
 import View.Observer;
 
 public abstract class Observable {
 
-	private Observer observer;
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 
 	public void addObserver(Observer observer) {
-		if (observer != null) {
-			this.observer = observer;
-		}
+		observers.add(observer);
 	}
 
-	public void removeObserver() {
-		this.observer = null;
+	public void removeObserver(Observable observer) {
+		observers.remove(observer);
 	}
 
 	public void notifyObserver() {
-		if(observer != null) {
+		for (Observer observer: observers) {
 			observer.update(this);
 		}
 	}
