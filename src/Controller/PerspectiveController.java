@@ -10,13 +10,11 @@ import javafx.scene.input.ScrollEvent;
 public class PerspectiveController {
 
 	private static final double ZOOM_FACTOR = 0.1;
-	private CommandManager commandManager;
 	private PersepectiveImageView imageView;
 	private double initialX, initialY;
 	private PerspectiveModel model;
 
 	public PerspectiveController(PerspectiveModel model, PersepectiveImageView imageView) {
-		this.commandManager = CommandManager.getInstance();
 		this.imageView = imageView;
 		this.model = model;
 	}
@@ -43,8 +41,8 @@ public class PerspectiveController {
     	Point2D translation = new Point2D(deltaX, deltaY);
 		
 		Command command = new TranslateCommand(translation, model);
-		commandManager.addCommand(command);
-		commandManager.executeCommand(command);
+		CommandManager.getInstance().addCommand(command);
+		CommandManager.getInstance().executeCommand(command);
 	}
 
 	public void handleMouseDragged(MouseEvent event) {
@@ -66,8 +64,8 @@ public class PerspectiveController {
 		}
 		
 		Command command = new ZoomCommand(zoom, model);
-		commandManager.addCommand(command);
-		commandManager.executeCommand(command);
+		CommandManager.getInstance().addCommand(command);
+		CommandManager.getInstance().executeCommand(command);
 	}
 
 	public void loadModel(PerspectiveModel model) {
@@ -87,11 +85,11 @@ public class PerspectiveController {
 	}
 
 	public void undo() {
-		commandManager.undo();
+		CommandManager.getInstance().undo();
 	}
 
 	public void redo() {
-		commandManager.redo();
+		CommandManager.getInstance().redo();
 	}
 
 	/*public void zoom(Double scale) {

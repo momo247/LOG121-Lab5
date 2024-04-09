@@ -2,7 +2,6 @@ package Controller;
 
 import java.io.File;
 import Model.ImageModel;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 
 public class ImageController {

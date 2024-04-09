@@ -2,8 +2,6 @@ package Model;
 
 import java.io.Serializable;
 
-import javafx.scene.image.Image;
-
 public class ImageModel extends Observable implements Serializable{
     
 	private String path;
