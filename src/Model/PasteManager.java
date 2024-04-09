@@ -1,11 +1,14 @@
 package Model;
 
+import Controller.PerspectiveController;
+
 public class PasteManager {
 
-	private PerspectiveModel source, destination;
+	private PerspectiveModel source;
+	private PerspectiveController destination;
 	private CopyStrategy strategy;
 
-	public PasteManager(PerspectiveModel source, PerspectiveModel destination, CopyStrategy strategy) {
+	public PasteManager(PerspectiveModel source, PerspectiveController destination, CopyStrategy strategy) {
 		this.source = source;
 		this.destination = destination;
 		this.strategy = strategy;

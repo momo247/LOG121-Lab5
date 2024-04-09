@@ -37,10 +37,10 @@ public class MainWindow extends Application {
 	private ImageView thumbnailImageView, perspectiveImageView1, perspectiveImageView2;
 	private ImageModel iModel1, iModel2, iModel3;
 	private ThumbnailImageView tImageView;
-	private PerspectiveModel pModel1, pModel2, source, destination;
+	private PerspectiveModel pModel1, pModel2;
 	private PersepectiveImageView pImageView1, pImageView2;
 	private ImageController iController;
-	private PerspectiveController pController1, pController2;
+	private PerspectiveController pController1, pController2, source, destination;
 	private PasteManager pasteManager;
 	private MenuBar menuBar;
 	private VBox root = new VBox();
@@ -114,12 +114,13 @@ public class MainWindow extends Application {
 		pasteItem.setOnAction(e -> paste());
 
 		pImageView1.getImageView().setOnMouseClicked(e -> {
-			source = pController1.getPerspectiveModel();
-			destination = pController2.getPerspectiveModel();
+			source = pController1;
+			destination = pController2;
 		});
-		pImageView2.getImageView().setOnMouseClicked(e -> {
-			source = pController2.getPerspectiveModel();
-			destination = pController1.getPerspectiveModel();
+		pImageView2.getImageView().setOnMouseClicked(e -> { //p1get zoom somethinsomething
+			source = pController2;
+			destination = pController1;
+			System.out.println(pModel2.getScale());
 		});
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -144,15 +145,15 @@ public class MainWindow extends Application {
 	}
 
 	public void copyModel() {
-		pasteManager = new PasteManager(source, destination, new CopyBothStrategy());
+		pasteManager = new PasteManager(source.getPerspectiveModel(), destination, new CopyBothStrategy());
 	}
 
 	public void copyScale() {
-		pasteManager = new PasteManager(source, destination, new CopyScaleStrategy());
+		pasteManager = new PasteManager(source.getPerspectiveModel(), destination, new CopyScaleStrategy());
 	}
 
 	public void copyTranslation() {
-		pasteManager = new PasteManager(source, destination, new CopyTranslateStrategy());
+		pasteManager = new PasteManager(source.getPerspectiveModel(), destination, new CopyTranslateStrategy());
 	}
 
 	public void paste() {
@@ -198,8 +199,8 @@ public class MainWindow extends Application {
 		perspectiveImageView1.setOnMouseReleased(e -> pController1.handleMouseReleased(e));
 		perspectiveImageView2.setOnMouseReleased(e -> pController2.handleMouseReleased(e));
 
-		perspectiveImageView1.setOnMouseDragged(e -> pController1.handleMouseDragged(e)); // delete ca a la fin
-		perspectiveImageView2.setOnMouseDragged(e -> pController2.handleMouseDragged(e)); // delete ca a la fin
+		perspectiveImageView1.setOnMouseDragged(e -> pController1.handleMouseDragged(e));
+		perspectiveImageView2.setOnMouseDragged(e -> pController2.handleMouseDragged(e));
 
 		perspectiveImageView1.setOnScroll(e -> pController1.handleMouseScrolled(e));
 		perspectiveImageView2.setOnScroll(e -> pController2.handleMouseScrolled(e));

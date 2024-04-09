@@ -1,43 +1,23 @@
 package Controller;
 
-import javafx.scene.image.ImageView;
+import Model.PerspectiveModel;
 
 public class ZoomCommand extends Command {
 
-	//private ImageView imageView;
 	private double scale;
 
-
-	/*public ZoomCommand(ImageView imageView, double scale) {
-		this.imageView = imageView;
+	public ZoomCommand(double scale) {
 		this.scale = scale;
 	}
 
 	@Override
-	public void execute() {
-		imageView.setScaleX(imageView.getScaleX() * scale);		
-		imageView.setScaleY(imageView.getScaleY() * scale);
+	public void execute(PerspectiveModel model) {
+		model.setScale(scale);
 	}
 
 	@Override
 	public void undo() {
-		imageView.setScaleX(imageView.getScaleX() / scale);		
-		imageView.setScaleY(imageView.getScaleY() / scale);
-	}*/
-
-	public ZoomCommand(PerspectiveController controller, double scale) {
-		perspectiveController = controller;
-		this.scale = scale;
-	}
-
-	@Override
-	public void execute() {
-		perspectiveController.getPerspectiveModel().setScale(scale);
-	}
-
-	@Override
-	public void undo() {
-		perspectiveController.getPerspectiveModel().setScale(1 / scale);
+		//model.setScale(1 / scale);
 	}
 	
 }

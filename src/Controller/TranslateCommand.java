@@ -1,45 +1,21 @@
 package Controller;
 
+import Model.PerspectiveModel;
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
 
 public class TranslateCommand extends Command {
 
 	private Point2D translation, location;
-
-	/*public TranslateCommand(ImageView imageView, Point2D translation) {
-		this.imageView = imageView;
-		this.translation = translation;
-		location = new Point2D(imageView.getTranslateX() + translation.getX(), imageView.getTranslateY() + translation.getY());
-	}
-
-	@Override
-	public void execute() {
-		imageView.setTranslateX(location.getX());
-		imageView.setTranslateY(location.getY());
-	}
-
-	public Point2D getLocation() {
-		return this.location;
-	}
-
-	@Override
-	public void undo() {
-		location = new Point2D(imageView.getTranslateX() - translation.getX(), imageView.getTranslateY() - translation.getY());
-		imageView.setTranslateX(location.getX());
-		imageView.setTranslateY(location.getY());
-	}*/
 	
-	public TranslateCommand(PerspectiveController controller, Point2D translation) {
-		this.perspectiveController = controller;
+	public TranslateCommand(Point2D translation) {
 		this.translation = translation;
-		location = new Point2D(perspectiveController.getPerspectiveModel().getX() + translation.getX(), perspectiveController.getPerspectiveModel().getY() + translation.getY());
 	}
 
 	@Override
-	public void execute() {
-		perspectiveController.getPerspectiveModel().setX(location.getX());
-		perspectiveController.getPerspectiveModel().setY(location.getY());
+	public void execute(PerspectiveModel model) {
+		location = new Point2D(model.getX() + translation.getX(), model.getY() + translation.getY());
+		model.setX(location.getX());
+		model.setY(location.getY());
 	}
 
 	public Point2D getLocation() {
@@ -48,8 +24,8 @@ public class TranslateCommand extends Command {
 
 	@Override
 	public void undo() {
-		location = new Point2D(perspectiveController.getPerspectiveModel().getX() - translation.getX(), perspectiveController.getPerspectiveModel().getY() - translation.getY());
-		perspectiveController.getPerspectiveModel().setX(location.getX());
-		perspectiveController.getPerspectiveModel().setY(location.getY());
+		/*location = new Point2D(model.getX() - translation.getX(), model.getY() - translation.getY());
+		model.setX(location.getX());
+		model.setY(location.getY());*/
 	}
 }
