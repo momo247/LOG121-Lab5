@@ -8,9 +8,7 @@ public class CommandManager {
 	private ArrayList<Command> history = new ArrayList<>();
 	private int index;
 
-	private CommandManager() {
-		//history = new ArrayList<>();
-	}
+	private CommandManager() {}
 
 	public static CommandManager getInstance() {
 		if (instance == null) {

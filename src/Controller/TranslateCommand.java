@@ -27,8 +27,4 @@ public class TranslateCommand extends Command {
 		this.model.setY(location.getY());
 	}
 
-	/*public Point2D getLocation() {
-		return this.location;
-	}*/
-
 }
