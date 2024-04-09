@@ -5,14 +5,21 @@ import Model.PerspectiveModel;
 public class ZoomCommand extends Command {
 
 	private double scale;
+	private PerspectiveModel model;
 
-	public ZoomCommand(double scale) {
+	public ZoomCommand(double scale, PerspectiveModel model) {
 		this.scale = scale;
+		this.model = model;
 	}
 
 	@Override
-	public void execute(PerspectiveModel model) {
-		model.setScale(scale);
+	public void execute() {
+		this.model.setScale(this.model.getScale() * scale);
+	}
+
+	@Override
+	public void undo() {
+		this.model.setScale(this.model.getScale() / scale);
 	}
 
 }
