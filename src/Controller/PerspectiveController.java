@@ -13,7 +13,6 @@ public class PerspectiveController {
 	private CommandManager commandManager;
 	private PersepectiveImageView imageView;
 	private double initialX, initialY;
-	private double totalZoom = 1;
 	private PerspectiveModel model;
 
 	public PerspectiveController(PerspectiveModel model, PersepectiveImageView imageView) {
@@ -34,9 +33,7 @@ public class PerspectiveController {
 
 	public void handleMouseReleased(MouseEvent event) {
 		imageView.getImageView().setCursor(Cursor.OPEN_HAND);
-		if(event.getX() != initialX && event.getY() != initialY) {
-			addTranslate(event);
-		}
+		addTranslate(event);
 	}
 
 
@@ -45,17 +42,17 @@ public class PerspectiveController {
     	double deltaY = event.getY() - initialY;
     	Point2D translation = new Point2D(deltaX, deltaY);
 		
-		Command command = new TranslateCommand(translation);
-		commandManager.addMemento(model.createMemento());
-		commandManager.executeCommand(command, model);
+		Command command = new TranslateCommand(translation, model);
+		commandManager.addCommand(command);
+		commandManager.executeCommand(command);
 	}
 
 	public void handleMouseDragged(MouseEvent event) {
-		double deltaX = event.getX() - initialX;
+		/*double deltaX = event.getX() - initialX;
     	double deltaY = event.getY() - initialY;
     	Point2D translation = new Point2D(deltaX, deltaY);
 		Command command = new TranslateCommand(translation);
-    	commandManager.executeCommand(command, model);
+    	commandManager.executeCommand(command, model);*/
 	}
 
 	public void handleMouseScrolled(ScrollEvent event) {
@@ -67,17 +64,10 @@ public class PerspectiveController {
 		} else {
 			zoom = 1 - ZOOM_FACTOR;
 		}
-
-		totalZoom *= zoom;
-
-		if(totalZoom < 0.51) {
-			totalZoom /= zoom;
-			return;
-		}
 		
-		Command command = new ZoomCommand(totalZoom);
-		commandManager.addMemento(model.createMemento());
-		commandManager.executeCommand(command, model);
+		Command command = new ZoomCommand(zoom, model);
+		commandManager.addCommand(command);
+		commandManager.executeCommand(command);
 	}
 
 	public void loadModel(PerspectiveModel model) {
@@ -89,12 +79,7 @@ public class PerspectiveController {
 		}
 		if(this.model.getScale() != model.getScale()) {
 			this.model.setScale(model.getScale());
-			totalZoom = this.model.getScale();
 		}
-	}
-
-	public void setTotalZoom(double totalZoom) {
-		this.totalZoom = totalZoom;
 	}
 
 	public PerspectiveModel getPerspectiveModel() {

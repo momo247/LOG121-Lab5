@@ -2,19 +2,13 @@ package Controller;
 
 import java.util.ArrayList;
 
-import Model.Memento;
-import Model.PerspectiveModel;
-
 public class CommandManager {
 
 	private static CommandManager instance;
-	private ArrayList<Memento> history;
+	private ArrayList<Command> history = new ArrayList<>();
 	private int index;
-	private PerspectiveModel model;
 
-	private CommandManager() {
-		history = new ArrayList<>();
-	}
+	private CommandManager() {}
 
 	public static CommandManager getInstance() {
 		if (instance == null) {
@@ -23,26 +17,30 @@ public class CommandManager {
 		return instance;
 	}
 
-	public void executeCommand(Command command, PerspectiveModel model) {
-		this.model = model;
-		command.execute(model);
+	public void executeCommand(Command command) {
+		command.execute();
 	}
 
 	public void undo() {
+
 		if(index < 0 || history.size() == 0) {
 			return;
 		}
-		model.restoreFromMemento(history.get(index--));
+		Command command = history.get(index--);
+		command.undo();
 	}
 
 	public void redo() {
-		if (index >= -1 && index < history.size() - 1) {
-			model.restoreFromMemento(history.get(++index));
+		
+		if (index < history.size() - 1) {
+			index++;
+			Command command = history.get(index);
+			command.execute();
 		}
 	}
 
-	public void addMemento(Memento memento) {
-		history.add(memento);
+	public void addCommand(Command command) {
+		history.add(command);
 		index = history.size() - 1;
 	}
 

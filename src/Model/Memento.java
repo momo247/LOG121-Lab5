@@ -1,6 +1,6 @@
 package Model;
 
-public class Memento {
+/*public class Memento {
 	private PerspectiveModel model;
 
 	public Memento(PerspectiveModel model) {
@@ -10,4 +10,4 @@ public class Memento {
 	public PerspectiveModel getModel() {
 		return model;
 	}
-}
+}*/
