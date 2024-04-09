@@ -2,8 +2,8 @@
 #Template for AL projects for Dynamics 365 Business Central
 #launch.json folder
 .vscode/
-bin
-.idea
+bin/
+.idea/
 .classpath
 .projects
 model.ser
