@@ -37,13 +37,13 @@ public class PersepectiveImageView implements Observer {
 			this.setImage(iModel.getImage());
 		} else if (observable instanceof PerspectiveModel) {
             PerspectiveModel model = (PerspectiveModel) observable;
-			
 			if(model != null) {
 				this.imageView.setTranslateX(model.getX());
 				this.imageView.setTranslateY(model.getY());
 				this.imageView.setScaleX(model.getScale());
 				this.imageView.setScaleY(model.getScale());
 			}
-        }
+			
+		}	
 	}
 }

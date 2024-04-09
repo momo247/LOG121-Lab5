@@ -1,8 +1,12 @@
 import Controller.ImageController;
 import Controller.PerspectiveController;
 import Controller.Serialize;
+import Model.CopyBothStrategy;
+import Model.CopyScaleStrategy;
+import Model.CopyTranslateStrategy;
 import Model.ImageModel;
 import Model.ModelWrapper;
+import Model.PasteManager;
 import Model.PerspectiveModel;
 import View.PersepectiveImageView;
 import View.ThumbnailImageView;
@@ -35,7 +39,8 @@ public class MainWindow extends Application {
 	private PerspectiveModel pModel1, pModel2;
 	private PersepectiveImageView pImageView1, pImageView2;
 	private ImageController iController;
-	private PerspectiveController pController1, pController2;
+	private PerspectiveController pController1, pController2, source, destination;
+	private PasteManager pasteManager;
 	private MenuBar menuBar;
 	private VBox root = new VBox();
 
@@ -47,9 +52,7 @@ public class MainWindow extends Application {
 		tImageView = new ThumbnailImageView();
 		pImageView1 = new PersepectiveImageView();
 		pImageView2 = new PersepectiveImageView();
-		pImageView1.getImageView().toBack();
-		pImageView2.getImageView().toBack();
-
+		
 		thumbnailImageView = tImageView.getImageView();
 		perspectiveImageView1 = pImageView1.getImageView();
 		perspectiveImageView2 = pImageView2.getImageView();
@@ -57,16 +60,16 @@ public class MainWindow extends Application {
 		pModel1 = new PerspectiveModel();
 		pModel2 = new PerspectiveModel();
 
-		iController = new ImageController(iModel1, iModel2, iModel3);
-		pController1 = new PerspectiveController(pModel1, pImageView1);
-		pController2 = new PerspectiveController(pModel2, pImageView2);
-
 		iModel1.addObserver(tImageView);
 		iModel2.addObserver(pImageView1);
 		iModel3.addObserver(pImageView2);
 
 		pModel1.addObserver(pImageView1);
 		pModel2.addObserver(pImageView2);
+		
+		iController = new ImageController(iModel1, iModel2, iModel3);
+		pController1 = new PerspectiveController(pModel1, pImageView1);
+		pController2 = new PerspectiveController(pModel2, pImageView2);
 
 		menuBar = new MenuBar();
 		Menu fileMenu = new Menu("File");
@@ -86,7 +89,7 @@ public class MainWindow extends Application {
 		MenuItem translationItem = new MenuItem("Copy translation");
 		MenuItem undoItem = new MenuItem("Undo");
 		MenuItem redoItem = new MenuItem("Redo");
-		copyMenu.getItems().addAll(allItem, scaleItem, translationItem);
+		copyMenu.getItems().addAll(scaleItem, translationItem, allItem);
 		optionMenu.getItems().addAll(copyMenu, pasteItem);
 		editMenu.getItems().addAll(undoItem, redoItem);
 		
@@ -107,6 +110,16 @@ public class MainWindow extends Application {
 		allItem.setOnAction(e -> copyModel());
 		scaleItem.setOnAction(e -> copyScale());
 		translationItem.setOnAction(e -> copyTranslation());
+		pasteItem.setOnAction(e -> paste());
+
+		pImageView1.getImageView().setOnMouseClicked(e -> {
+			source = pController1;
+			destination = pController2;
+		});
+		pImageView2.getImageView().setOnMouseClicked(e -> {
+			source = pController2;
+			destination = pController1;
+		});
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT);
 
@@ -130,15 +143,19 @@ public class MainWindow extends Application {
 	}
 
 	public void copyModel() {
-
+		pasteManager = new PasteManager(source.getPerspectiveModel(), destination, new CopyBothStrategy());
 	}
 
 	public void copyScale() {
-
+		pasteManager = new PasteManager(source.getPerspectiveModel(), destination, new CopyScaleStrategy());
 	}
 
 	public void copyTranslation() {
+		pasteManager = new PasteManager(source.getPerspectiveModel(), destination, new CopyTranslateStrategy());
+	}
 
+	public void paste() {
+		pasteManager.paste();
 	}
 
 	public void openImage(String path) {
@@ -180,8 +197,8 @@ public class MainWindow extends Application {
 		perspectiveImageView1.setOnMouseReleased(e -> pController1.handleMouseReleased(e));
 		perspectiveImageView2.setOnMouseReleased(e -> pController2.handleMouseReleased(e));
 
-		perspectiveImageView1.setOnMouseDragged(e -> pController1.handleMouseDragged(e)); // delete ca a la fin
-		perspectiveImageView2.setOnMouseDragged(e -> pController2.handleMouseDragged(e)); // delete ca a la fin
+		perspectiveImageView1.setOnMouseDragged(e -> pController1.handleMouseDragged(e));
+		perspectiveImageView2.setOnMouseDragged(e -> pController2.handleMouseDragged(e));
 
 		perspectiveImageView1.setOnScroll(e -> pController1.handleMouseScrolled(e));
 		perspectiveImageView2.setOnScroll(e -> pController2.handleMouseScrolled(e));

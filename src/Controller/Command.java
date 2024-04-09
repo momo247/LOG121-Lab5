@@ -1,9 +1,8 @@
 package Controller;
 
+import Model.PerspectiveModel;
+
 public abstract class Command {
 
-	protected PerspectiveController perspectiveController;
-
-	public abstract void execute();
-	public abstract void undo();
+	public abstract void execute(PerspectiveModel model);
 }

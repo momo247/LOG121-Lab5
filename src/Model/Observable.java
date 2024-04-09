@@ -7,7 +7,9 @@ public abstract class Observable {
 	private Observer observer;
 
 	public void addObserver(Observer observer) {
-		this.observer = observer;
+		if (observer != null) {
+			this.observer = observer;
+		}
 	}
 
 	public void removeObserver() {
@@ -17,7 +19,6 @@ public abstract class Observable {
 	public void notifyObserver() {
 		if(observer != null) {
 			observer.update(this);
-		}		
+		}
 	}
-	
 }

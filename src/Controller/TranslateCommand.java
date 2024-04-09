@@ -1,34 +1,25 @@
 package Controller;
 
+import Model.PerspectiveModel;
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
 
 public class TranslateCommand extends Command {
 
-	private ImageView imageView;
 	private Point2D translation, location;
-
-	public TranslateCommand(ImageView imageView, Point2D translation) {
-		this.imageView = imageView;
+	
+	public TranslateCommand(Point2D translation) {
 		this.translation = translation;
-		location = new Point2D(imageView.getTranslateX() + translation.getX(), imageView.getTranslateY() + translation.getY());
 	}
 
 	@Override
-	public void execute() {
-		imageView.setTranslateX(location.getX());
-		imageView.setTranslateY(location.getY());
+	public void execute(PerspectiveModel model) {
+		location = new Point2D(model.getX() + translation.getX(), model.getY() + translation.getY());
+		model.setX(location.getX());
+		model.setY(location.getY());
 	}
 
 	public Point2D getLocation() {
 		return this.location;
 	}
 
-	@Override
-	public void undo() {
-		location = new Point2D(imageView.getTranslateX() - translation.getX(), imageView.getTranslateY() - translation.getY());
-		imageView.setTranslateX(location.getX());
-		imageView.setTranslateY(location.getY());
-	}
-	
 }
