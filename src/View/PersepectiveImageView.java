@@ -3,7 +3,6 @@ package View;
 import Model.ImageModel;
 import Model.Observable;
 import Model.PerspectiveModel;
-import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -36,7 +35,6 @@ public class PersepectiveImageView implements Observer {
 		if(observable instanceof ImageModel) {
 			ImageModel iModel = (ImageModel) observable;
 			this.setImage(iModel.getImage());
-			System.out.println("Updated!");
 		} else if (observable instanceof PerspectiveModel) {
             PerspectiveModel model = (PerspectiveModel) observable;
 			if(model != null) {
@@ -44,7 +42,6 @@ public class PersepectiveImageView implements Observer {
 				this.imageView.setTranslateY(model.getY());
 				this.imageView.setScaleX(model.getScale());
 				this.imageView.setScaleY(model.getScale());
-				System.out.println("Scale : " + imageView.getScaleX());
 			}
 			
 		}	

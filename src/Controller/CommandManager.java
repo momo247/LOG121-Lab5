@@ -29,14 +29,10 @@ public class CommandManager {
 	}
 
 	public void undo() {
-		if(index >= -1 && index < history.size() && history.size() > 1) {
-			System.out.println("Undoing " + index);
-			model.restoreFromMemento(history.get(index - 1));
-			index--;
+		if(index < 0 || history.size() == 0) {
+			return;
 		}
-		for(int i = 0; i < history.size(); i++) {
-			System.out.println(i + " - " + history.get(i).getModel().getScale() + ", " + history.get(i).getModel().getX() + ", " + history.get(i).getModel().getY());
-		}
+		model.restoreFromMemento(history.get(index--));
 	}
 
 	public void redo() {

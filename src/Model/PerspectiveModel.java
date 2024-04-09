@@ -52,6 +52,5 @@ public class PerspectiveModel extends Observable implements Serializable {
 		setX(memento.getModel().getX());
 		setY(memento.getModel().getY());
 		setScale(memento.getModel().getScale());
-		System.out.println("Restoring scale : " + memento.getModel().getScale());
 	}
 }

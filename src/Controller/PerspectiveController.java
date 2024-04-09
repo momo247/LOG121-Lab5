@@ -20,8 +20,6 @@ public class PerspectiveController {
 		this.commandManager = CommandManager.getInstance();
 		this.imageView = imageView;
 		this.model = model;
-		commandManager.addMemento(model.createMemento());
-		//this.model = new PerspectiveModel();
 	}
 
 	public void handleMouseEntered() {
@@ -47,21 +45,16 @@ public class PerspectiveController {
     	double deltaY = event.getY() - initialY;
     	Point2D translation = new Point2D(deltaX, deltaY);
 		
-		//Command command = new TranslateCommand(imageView.getImageView(), translation);
-		//Command command = new TranslateCommand(model, translation);
 		Command command = new TranslateCommand(translation);
 		commandManager.addMemento(model.createMemento());
-		//commandManager.executeCommand(command, model);
+		commandManager.executeCommand(command, model);
 	}
 
 	public void handleMouseDragged(MouseEvent event) {
 		double deltaX = event.getX() - initialX;
     	double deltaY = event.getY() - initialY;
     	Point2D translation = new Point2D(deltaX, deltaY);
-		//Command command = new TranslateCommand(model, translation);
 		Command command = new TranslateCommand(translation);
-		//this.command = command;
-		//commandManager.addMemento(command);
     	commandManager.executeCommand(command, model);
 	}
 
@@ -82,11 +75,9 @@ public class PerspectiveController {
 			return;
 		}
 		
-		//Command command = new ZoomCommand(imageView.getImageView(), zoom);
-		//Command command = new ZoomCommand(model, totalZoom);
 		Command command = new ZoomCommand(totalZoom);
-		commandManager.executeCommand(command, model);
 		commandManager.addMemento(model.createMemento());
+		commandManager.executeCommand(command, model);
 	}
 
 	public void loadModel(PerspectiveModel model) {

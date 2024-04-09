@@ -22,10 +22,4 @@ public class TranslateCommand extends Command {
 		return this.location;
 	}
 
-	@Override
-	public void undo() {
-		/*location = new Point2D(model.getX() - translation.getX(), model.getY() - translation.getY());
-		model.setX(location.getX());
-		model.setY(location.getY());*/
-	}
 }

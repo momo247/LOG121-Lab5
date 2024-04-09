@@ -3,7 +3,6 @@ import Controller.PerspectiveController;
 import Controller.Serialize;
 import Model.CopyBothStrategy;
 import Model.CopyScaleStrategy;
-import Model.CopyStrategy;
 import Model.CopyTranslateStrategy;
 import Model.ImageModel;
 import Model.ModelWrapper;
@@ -117,10 +116,9 @@ public class MainWindow extends Application {
 			source = pController1;
 			destination = pController2;
 		});
-		pImageView2.getImageView().setOnMouseClicked(e -> { //p1get zoom somethinsomething
+		pImageView2.getImageView().setOnMouseClicked(e -> {
 			source = pController2;
 			destination = pController1;
-			System.out.println(pModel2.getScale());
 		});
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT);

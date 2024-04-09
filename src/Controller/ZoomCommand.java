@@ -15,9 +15,4 @@ public class ZoomCommand extends Command {
 		model.setScale(scale);
 	}
 
-	@Override
-	public void undo() {
-		//model.setScale(1 / scale);
-	}
-	
 }
