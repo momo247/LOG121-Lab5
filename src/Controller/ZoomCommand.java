@@ -5,7 +5,6 @@ import Model.PerspectiveModel;
 public class ZoomCommand extends Command {
 
 	private double scale;
-	private PerspectiveModel model;
 
 	public ZoomCommand(double scale, PerspectiveModel model) {
 		this.scale = scale;

@@ -87,6 +87,7 @@ public class MainWindow extends Application {
 		MenuItem translationItem = new MenuItem("Copy translation");
 		MenuItem undoItem = new MenuItem("Undo");
 		MenuItem redoItem = new MenuItem("Redo");
+		
 		copyMenu.getItems().addAll(scaleItem, translationItem, allItem);
 		optionMenu.getItems().addAll(copyMenu, pasteItem);
 		editMenu.getItems().addAll(undoItem, redoItem);
@@ -198,9 +199,6 @@ public class MainWindow extends Application {
 
 		perspectiveImageView1.setOnMouseReleased(e -> pController1.handleMouseReleased(e));
 		perspectiveImageView2.setOnMouseReleased(e -> pController2.handleMouseReleased(e));
-
-		perspectiveImageView1.setOnMouseDragged(e -> pController1.handleMouseDragged(e));
-		perspectiveImageView2.setOnMouseDragged(e -> pController2.handleMouseDragged(e));
 
 		perspectiveImageView1.setOnScroll(e -> pController1.handleMouseScrolled(e));
 		perspectiveImageView2.setOnScroll(e -> pController2.handleMouseScrolled(e));

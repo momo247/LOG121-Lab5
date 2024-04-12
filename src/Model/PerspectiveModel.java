@@ -7,33 +7,23 @@ public class PerspectiveModel extends Observable implements Serializable {
 	private double scale = 1;
 	private double x, y;
 
-	public PerspectiveModel() {
-
-	}
-
-	public PerspectiveModel(PerspectiveModel model) {
-		this.x = model.getX();
-		this.y = model.getY();
-		this.scale = model.getScale();
-	}
-
 	public double getScale() {
 		return scale;
 	}
 
 	public void setScale(double scale) {
 		this.scale = scale;
-		notifyObserver();
+		notifyObservers();
 	}
 
 	public void setX(double x) {
 		this.x = x;
-		notifyObserver();
+		notifyObservers();
 	}
 
 	public void setY(double y) {
 		this.y = y;
-		notifyObserver();
+		notifyObservers();
 	}
 
 	public double getX() {

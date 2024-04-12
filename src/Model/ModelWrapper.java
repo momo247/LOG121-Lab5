@@ -4,14 +4,13 @@ import java.io.Serializable;
 
 public class ModelWrapper implements Serializable {
 	private PerspectiveModel perspectiveModel1, perspectiveModel2;
-	private ImageModel iModel;
+	private ImageModel imageModel;
 
-    public ModelWrapper(PerspectiveModel perspectiveModel1, PerspectiveModel perspectiveModel2, ImageModel iModel) {
+    public ModelWrapper(PerspectiveModel perspectiveModel1, PerspectiveModel perspectiveModel2, ImageModel imageModel) {
 		this.perspectiveModel1 = perspectiveModel1;
 		this.perspectiveModel2 = perspectiveModel2;
-		this.iModel =iModel;
+		this.imageModel =imageModel;
     }
-
 
     public PerspectiveModel getPerspectiveModel1() {
         return perspectiveModel1;
@@ -22,8 +21,7 @@ public class ModelWrapper implements Serializable {
     }
     
     public ImageModel getImageModel() {
-    	return iModel;
+    	return imageModel;
     }
     
-
 }

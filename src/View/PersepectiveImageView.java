@@ -14,16 +14,8 @@ public class PersepectiveImageView implements Observer {
 		imageView = new ImageView();
 	}
 
-	public void display(Image image) {
-		imageView.setImage(image);
-	}
-
 	public ImageView getImageView() {
 		return imageView;
-	}
-
-	public void initView() {
-		
 	}
 
 	public void setImage(Image image) {

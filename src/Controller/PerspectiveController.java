@@ -34,7 +34,6 @@ public class PerspectiveController {
 		addTranslate(event);
 	}
 
-
 	public void addTranslate(MouseEvent event) {
 		double deltaX = event.getX() - initialX;
     	double deltaY = event.getY() - initialY;
@@ -43,14 +42,6 @@ public class PerspectiveController {
 		Command command = new TranslateCommand(translation, model);
 		CommandManager.getInstance().addCommand(command);
 		CommandManager.getInstance().executeCommand(command);
-	}
-
-	public void handleMouseDragged(MouseEvent event) {
-		/*double deltaX = event.getX() - initialX;
-    	double deltaY = event.getY() - initialY;
-    	Point2D translation = new Point2D(deltaX, deltaY);
-		Command command = new TranslateCommand(translation);
-    	commandManager.executeCommand(command, model);*/
 	}
 
 	public void handleMouseScrolled(ScrollEvent event) {
@@ -91,13 +82,5 @@ public class PerspectiveController {
 	public void redo() {
 		CommandManager.getInstance().redo();
 	}
-
-	/*public void zoom(Double scale) {
-
-	}
-
-	public void translate(Point2D translation) {
-
-	}*/
 	
 }

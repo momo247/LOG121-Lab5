@@ -6,7 +6,6 @@ import javafx.geometry.Point2D;
 public class TranslateCommand extends Command {
 
 	private Point2D translation, location;
-	private PerspectiveModel model;
 	
 	public TranslateCommand(Point2D translation, PerspectiveModel model) {
 		this.translation = translation;

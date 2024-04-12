@@ -21,10 +21,6 @@ public class ThumbnailImageView implements Observer {
 		return imageView;
 	}
 
-	public void initView() {
-		
-	}
-
 	public void setImage(Image image) {
 		imageView.setImage(image);
 	}
