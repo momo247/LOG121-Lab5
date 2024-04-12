@@ -13,10 +13,6 @@ public class ThumbnailImageView implements Observer {
         imageView = new ImageView();
     }
 
-	public void display(Image image) {
-
-	}
-
 	public ImageView getImageView() {
 		return imageView;
 	}

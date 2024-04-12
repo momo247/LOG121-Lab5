@@ -9,7 +9,7 @@ public class ModelWrapper implements Serializable {
     public ModelWrapper(PerspectiveModel perspectiveModel1, PerspectiveModel perspectiveModel2, ImageModel imageModel) {
 		this.perspectiveModel1 = perspectiveModel1;
 		this.perspectiveModel2 = perspectiveModel2;
-		this.imageModel =imageModel;
+		this.imageModel = imageModel;
     }
 
     public PerspectiveModel getPerspectiveModel1() {
