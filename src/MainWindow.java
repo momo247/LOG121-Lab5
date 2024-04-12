@@ -96,8 +96,8 @@ public class MainWindow extends Application {
 		menuBar.setUseSystemMenuBar(true);
 		root.getChildren().add(menuBar);
 
-		openImageItem.setOnAction(e -> openImage(""));
-		openfileItem.setOnAction(e -> loadModels(""));
+		openImageItem.setOnAction(e -> openImage());
+		openfileItem.setOnAction(e -> loadModels());
 		saveItem.setOnAction(e -> saveModels());
 		exitItem.setOnAction(e -> primaryStage.close());
 
@@ -135,7 +135,7 @@ public class MainWindow extends Application {
 		Serialize.serializeModels(wrapper, "models.ser");
 	}
 
-	public void loadModels(String path) {
+	public void loadModels() {
 		ModelWrapper wrapper = Serialize.deserializeModels("models.ser");
 		pController1.loadModel(wrapper.getPerspectiveModel1());
 		pController2.loadModel(wrapper.getPerspectiveModel2());
@@ -158,7 +158,7 @@ public class MainWindow extends Application {
 		pasteManager.paste();
 	}
 
-	public void openImage(String path) {
+	public void openImage() {
 		iController.selectImage();
 	}
 	
